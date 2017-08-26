@@ -30,6 +30,9 @@ class LoopNetSpider(scrapy.Spider):
                 continue
             yield response.follow(links[0], self.parse_detail)
 
+        for a in response.css('.paging a.caret-right-large'):
+            yield response.follow(a, self.parse)
+
     CSZ_REGEX = re.compile(r'(\w[^,]*),\s+(\w+)\s+(\d+)')
 
     def parse_detail(self, response):
